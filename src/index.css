@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@theme {
+  --color-pink: #FFD1DC;
+  --color-pink-light: #FFE5EC;
+  --color-pink-dark: #F5A0B5;
+  --color-blue: #B2E2F2;
+  --color-blue-light: #D4EFF8;
+  --color-blue-dark: #7EC8E3;
+  --color-text: #4A4A4A;
+  --color-text-light: #7A7A7A;
+  --color-bg: #FFF9FB;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-pink-dark); border-radius: 3px; }
+
+/* ── Sakura falling petals ── */
+@keyframes petalFall1 {
+  0% { transform: translate(0, -10%) rotate(0deg); opacity: 0; }
+  5% { opacity: var(--max-opacity, 1); }
+  90% { opacity: calc(var(--max-opacity, 0.8) * 0.75); }
+  100% { transform: translate(40vw, 110vh) rotate(720deg); opacity: 0; }
+}
+@keyframes petalFall2 {
+  0% { transform: translate(0, -10%) rotate(360deg); opacity: 0; }
+  5% { opacity: calc(var(--max-opacity, 0.9) * 0.9); }
+  90% { opacity: calc(var(--max-opacity, 0.6) * 0.8); }
+  100% { transform: translate(-30vw, 110vh) rotate(900deg); opacity: 0; }
+}
+@keyframes petalFall3 {
+  0% { transform: translate(0, -10%) rotate(180deg); opacity: 0; }
+  5% { opacity: calc(var(--max-opacity, 0.7) * 0.9); }
+  90% { opacity: calc(var(--max-opacity, 0.9) * 0.7); }
+  100% { transform: translate(50vw, 110vh) rotate(600deg); opacity: 0; }
+}
+@keyframes petalSway {
+  0%, 100% { margin-left: 0; }
+  25% { margin-left: 20px; }
+  50% { margin-left: -15px; }
+  75% { margin-left: 25px; }
+}
+@keyframes petalSwayReverse {
+  0%, 100% { margin-left: 0; }
+  25% { margin-left: -20px; }
+  50% { margin-left: 15px; }
+  75% { margin-left: -25px; }
+}
+
+.sakura-petal {
+  position: absolute;
+  top: -10%;
+  width: 12px;
+  height: 12px;
+  pointer-events: none;
+  opacity: 0;
+  filter: drop-shadow(0 1px 2px rgba(255, 182, 193, 0.2));
+}
+.sakura-petal::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(ellipse at center, #FFB7C5 0%, #FF91A4 60%, #FF6B8A 100%);
+  border-radius: 60% 0% 55% 50% / 55% 0% 60% 50%;
+  transform: rotate(45deg);
+  box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.5);
+}
+
+.petal-1 { animation: petalFall1 var(--fall-duration, 8s) linear infinite; animation-delay: var(--delay, 0s); }
+.petal-2 { animation: petalFall2 var(--fall-duration, 10s) linear infinite; animation-delay: var(--delay, 0s); }
+.petal-3 { animation: petalFall3 var(--fall-duration, 9s) linear infinite; animation-delay: var(--delay, 0s); }
+.sway { animation: petalSway var(--sway-dur, 3s) ease-in-out infinite alternate; }
+.sway-reverse { animation: petalSwayReverse var(--sway-dur, 3.5s) ease-in-out infinite alternate; }
+
+/* Large petal variant */
+.sakura-petal-lg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Small petal variant */
+.sakura-petal-sm {
+  width: 8px;
+  height: 8px;
+  opacity: 0;
+  filter: drop-shadow(0 1px 1px rgba(255, 182, 193, 0.2));
+}
+
+/* Background gradient for sakura scene */
+.bg-sakura {
+  background: linear-gradient(180deg, #FFF0F5 0%, #FFE4ED 25%, #FFD1DC 50%, #FFB7C5 75%, #FF9FB5 100%);
+}
+
+/* Accessibility — respect motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .sakura-petal,
+  .sakura-petal-lg,
+  .sakura-petal-sm {
+    display: none !important;
+  }
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-pulse-soft,
+  .animate-shake,
+  .animate-float {
+    animation: none !important;
+  }
+}
